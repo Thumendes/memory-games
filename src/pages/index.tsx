@@ -1,4 +1,7 @@
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Confetti from "react-confetti";
+import toast from "react-hot-toast";
+import useWindowSize from "react-use/lib/useWindowSize";
 import Block from "../components/Block";
 import { blocks } from "../data/blocks";
 import Instrument, { Notes } from "../lib/Instrument";
@@ -20,7 +23,9 @@ const HomePage = () => {
   const [order, setOrder] = useState<number[]>([]);
   const [countNote, setCountNote] = useState(0);
   const [highlights, setHighlights] = useState<number>();
+  const [isParty, setIsParty] = useState(false);
   const instrumentRef = useRef<Instrument>(null);
+  const { height, width } = useWindowSize();
 
   useEffect(() => {
     instrumentRef.current = new Instrument("triangle");
@@ -35,7 +40,7 @@ const HomePage = () => {
   }, []);
 
   function handleStart() {
-    const newOrder = Array(10)
+    const newOrder = Array(6)
       .fill(null)
       .map(() => Math.floor(Math.random() * (5 - 1) + 1));
 
@@ -51,8 +56,20 @@ const HomePage = () => {
     setHighlights(undefined);
   }
 
+  async function party() {
+    setIsParty(true);
+    await sleep(5000);
+    setIsParty(false);
+  }
+
   async function play(order: number[]) {
+    toast.custom(
+      <span className="bg-white px-6 py-4 rounded-xl">
+        A ordem das cores é: <b>{order.join(", ")}.</b>
+      </span>
+    );
     console.log(order);
+
     for (const item of order) {
       instrumentRef.current.play(blocks[item].frequency, blocks[item].octave);
       highlight(item);
@@ -60,21 +77,22 @@ const HomePage = () => {
       await sleep(750);
     }
 
-    console.log("Sua vez!");
+    toast.success("Sua vez!");
   }
 
   function checkNote(key: number) {
     const isMiss = order[countNote] !== key;
 
     if (isMiss) {
-      return console.log("ERROU!");
+      return toast.error("Errou! Tente se lembrar.");
     }
 
-    console.log("ACERTOU!");
+    toast.success("Acertou! Qual a próxima?");
 
     if (countNote === order.length - 1) {
       setIsPlaying(false);
-      return console.log("ACABOUUU!");
+      party();
+      return toast.success("Finalizado com sucesso. Parabéns!");
     }
 
     setCountNote(countNote + 1);
@@ -112,6 +130,14 @@ const HomePage = () => {
         >
           Começar
         </button>
+      )}
+
+      {width !== Infinity && height !== Infinity && (
+        <Confetti
+          width={width}
+          height={height}
+          numberOfPieces={isParty ? 1000 : 0}
+        />
       )}
     </main>
   );
