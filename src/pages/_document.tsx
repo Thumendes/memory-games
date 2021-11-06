@@ -11,14 +11,34 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <title>Jogo de memória</title>
+
           <meta
             name="description"
             content="Trabalho de faculdade, jogo de memória, Arthur Mendes Pereira, Leticia Maria"
           />
-          <meta property="og:site_name" content="Jogo de Mempória" />
+          <meta property="og:title" content="Jogo de Mempória" />
+          <meta
+            property="og:description"
+            content="Jogo para treinar a memória"
+          />
           <meta property="og:type" content="website" />
           <meta
+            property="og:url"
+            content="https://memory-games-fawn.vercel.app/"
+          />
+          <meta
             property="og:image"
+            content="https://memory-games-fawn.vercel.app/screen.png"
+          />
+
+          <meta property="twitter:title" content="Jogo de Mempória" />
+          <meta
+            property="twitter:description"
+            content="Jogo para treinar a memória"
+          />
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta
+            property="twitter:image"
             content="https://memory-games-fawn.vercel.app/screen.png"
           />
 
