@@ -19,7 +19,7 @@ const Layout = ({ children, title = "Jogo de memória!", goBack = false }) => {
         <div className="h-full bg-gray-50 flex items-center justify-center flex-col">
           {children}
         </div>
-        <footer className="p-4 fixed bottom-0 w-full">
+        {/* <footer className="p-4 fixed bottom-0 w-full">
           <div className="text-right text-sm text-gray-400">
             <span>2021 Arthur Mendes - </span>
             <a
@@ -31,7 +31,7 @@ const Layout = ({ children, title = "Jogo de memória!", goBack = false }) => {
               @thumendess
             </a>
           </div>
-        </footer>
+        </footer>*/}
       </main>
     </>
   );
