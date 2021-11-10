@@ -1,34 +1,26 @@
+import Image from "next/image";
+
 export type ListItem = {
   id?: number;
   key: number;
   value: JSX.Element;
 };
 
-const list = [
-  {
-    key: 1,
-    value: <img src="/memory/1.jpeg" alt="Card para jogo da memória!" />,
-  },
-  {
-    key: 2,
-    value: <img src="/memory/2.jpeg" alt="Card para jogo da memória!" />,
-  },
-  {
-    key: 3,
-    value: <img src="/memory/3.jpeg" alt="Card para jogo da memória!" />,
-  },
-  {
-    key: 4,
-    value: <img src="/memory/4.jpeg" alt="Card para jogo da memória!" />,
-  },
-  {
-    key: 5,
-    value: <img src="/memory/5.jpeg" alt="Card para jogo da memória!" />,
-  },
-  {
-    key: 6,
-    value: <img src="/memory/6.jpeg" alt="Card para jogo da memória!" />,
-  },
-];
+const imagesArray: ListItem[] = Array(6)
+  .fill(null)
+  .map((_, index) => index + 1)
+  .map((value) => ({
+    key: value,
+    value: (
+      <Image
+        src={`/memory/${value}.png`}
+        alt="Card para jogo da memória!"
+        height={200}
+        width={200}
+      />
+    ),
+  }));
+
+const list: ListItem[] = [...imagesArray];
 
 export default list;

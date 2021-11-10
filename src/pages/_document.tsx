@@ -10,8 +10,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Jogo de memória</title>
-
           <meta
             name="description"
             content="Trabalho de faculdade, jogo de memória, Arthur Mendes Pereira, Leticia Maria"

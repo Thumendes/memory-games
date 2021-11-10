@@ -1,5 +1,5 @@
 class Utils {
-  static shuffle(array: any[]) {
+  static shuffle<T>(array: T[]): T[] {
     let currentIndex = array.length;
     let randomIndex = null;
 
