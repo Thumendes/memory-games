@@ -17,13 +17,13 @@ const Card = ({ card, onSelect, selected, finished }) => {
     <ReactCardFlip isFlipped={isFlipped}>
       <div
         onClick={() => onSelect(card)}
-        className="w-40 h-40 border-2 border-gray-200 flex items-center justify-center rounded-lg p-4"
+        className="w-24 h-2w-24 md:w-32 md:h-32 lg:w-40 lg:h-40 border-2 border-gray-200 flex items-center justify-center rounded-lg p-4"
       >
         <Image src="/brain.svg" alt="Brain" height={200} width={200} />
       </div>
       <div
         onClick={() => onSelect(card)}
-        className="w-40 h-40 border-2 border-gray-200 flex items-center justify-center rounded-lg p-1"
+        className="w-24 h-2w-24 md:w-32 md:h-32 lg:w-40 lg:h-40 border-2 border-gray-200 flex items-center justify-center rounded-lg p-1"
       >
         {selected || finished ? <span>{card.value}</span> : ""}
       </div>

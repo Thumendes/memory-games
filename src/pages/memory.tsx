@@ -8,7 +8,7 @@ const MemoryPage = () => {
 
   return (
     <div className="h-screen flex items-center justify-center">
-      <div className="grid grid-cols-4 grid-rows-3 gap-4">
+      <div className="grid grid-cols-3 grid-rows-4 md:grid-cols-4 md:grid-rows-3 gap-2">
         {cards.map((card, index) => {
           const isSelected = [selected, secondSelected].some(
             (item) => item && item.id === card.id
