@@ -16,22 +16,29 @@ const students = [
 const HomePage = () => {
   return (
     <Layout>
-      <div className="mb-16 px-4 text-center pt-16">
+      <div className="mb-16 px-4 text-center pt-16 z-10">
         <h1 className="text-4xl font-bold">
           Trabalho interdisciplinar enfermagem 2º período
         </h1>
+      </div>
+
+      <div className="absolute top-16 right-1/4 opacity-50">
+        <Image
+          src="/home/pieces.png"
+          alt="Quebra cabeça!"
+          height={200}
+          width={200}
+        />
       </div>
 
       <div className="mb-16 px-4 text-center">
         <p className="max-w-2xl text-2xl">
           {`Alunos: `}
           {students.map((student, index) => (
-            <>
-              <span key={index} className="hover:text-black text-gray-500">
-                {student}
-              </span>
+            <span key={index} className="hover:text-black text-gray-500">
+              {student}
               {index !== students.length - 1 ? ", " : "."}
-            </>
+            </span>
           ))}
         </p>
       </div>
