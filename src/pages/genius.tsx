@@ -6,7 +6,7 @@ import Block from "../components/Genius/Block";
 import Layout from "../components/Layout";
 import { blocks } from "../data/blocks";
 import Instrument, { Notes } from "../lib/Instrument";
-import sleep from "../lib/sleep";
+import Utils from "../lib/Utils";
 
 const notes = {
   z: { note: "C", octave: 4 },
@@ -53,13 +53,13 @@ const GeniusPage = () => {
 
   async function highlight(key: number) {
     setHighlights(key);
-    await sleep(200);
+    await Utils.sleep(200);
     setHighlights(undefined);
   }
 
   async function party() {
     setIsParty(true);
-    await sleep(5000);
+    await Utils.sleep(5000);
     setIsParty(false);
   }
 
@@ -75,7 +75,7 @@ const GeniusPage = () => {
       instrumentRef.current.play(blocks[item].frequency, blocks[item].octave);
       highlight(item);
 
-      await sleep(750);
+      await Utils.sleep(750);
     }
 
     toast.success("Sua vez!");

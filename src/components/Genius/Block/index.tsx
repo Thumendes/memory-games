@@ -1,5 +1,5 @@
 import { LiHTMLAttributes } from "react";
-import { blocks } from "../../data/blocks";
+import { blocks } from "../../../data/blocks";
 
 interface BlockProps extends LiHTMLAttributes<HTMLLIElement> {
   value: number;

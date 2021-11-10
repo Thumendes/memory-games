@@ -1,147 +1,79 @@
-import { useEffect, useRef, useState } from "react";
-import Confetti from "react-confetti";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import useWindowSize from "react-use/lib/useWindowSize";
-import Block from "../components/Block";
-import Layout from "../components/Layout";
-import { blocks } from "../data/blocks";
-import Instrument, { Notes } from "../lib/Instrument";
-import sleep from "../lib/sleep";
+import Card from "../components/Memory/Card";
+import list, { ListItem } from "../data/list";
+import Utils from "../lib/Utils";
 
-const notes = {
-  z: { note: "C", octave: 4 },
-  x: { note: "D", octave: 4 },
-  c: { note: "E", octave: 4 },
-  v: { note: "F", octave: 4 },
-  b: { note: "G", octave: 4 },
-  n: { note: "A", octave: 4 },
-  m: { note: "B", octave: 4 },
-  ",": { note: "C", octave: 5 },
-};
+const MemoryPage = () => {
+  const [cards, setCards] = useState<ListItem[]>([]);
+  const [selected, setSelected] = useState<ListItem>(null);
+  const [finished, setFinished] = useState<number[]>([]);
+  const [secondSelected, setSecondSelected] = useState<ListItem>(null);
 
-const GeniusPage = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [order, setOrder] = useState<number[]>([]);
-  const [countNote, setCountNote] = useState(0);
-  const [highlights, setHighlights] = useState<number>();
-  const [isParty, setIsParty] = useState(false);
-  const instrumentRef = useRef<Instrument>(null);
-  const { height, width } = useWindowSize();
+  function start() {
+    const newList = [...list, ...list].map((item, index) => ({
+      ...item,
+      id: index + 1,
+    }));
+
+    setFinished([]);
+    setCards(Utils.shuffle(newList));
+  }
 
   useEffect(() => {
-    instrumentRef.current = new Instrument("triangle");
-
-    window.onkeydown = (event) => {
-      const note = notes[event.key];
-
-      if (!note) return;
-
-      instrumentRef.current.play(note.note, note.octave);
-    };
+    start();
   }, []);
 
-  function handleStart() {
-    const newOrder = Array(6)
-      .fill(null)
-      .map(() => Math.floor(Math.random() * (5 - 1) + 1));
+  async function handleSelectCard(card: ListItem) {
+    if (finished.includes(card.key)) return;
+    if (selected && secondSelected) return;
 
-    setIsPlaying(true);
-    setOrder(newOrder);
-    setCountNote(0);
-    play(newOrder);
-  }
-
-  async function highlight(key: number) {
-    setHighlights(key);
-    await sleep(200);
-    setHighlights(undefined);
-  }
-
-  async function party() {
-    setIsParty(true);
-    await sleep(5000);
-    setIsParty(false);
-  }
-
-  async function play(order: number[]) {
-    toast.custom(
-      <span className="bg-white px-6 py-4 rounded-xl">
-        A ordem das cores é: <b>{order.join(", ")}.</b>
-      </span>
-    );
-    console.log(order);
-
-    for (const item of order) {
-      instrumentRef.current.play(blocks[item].frequency, blocks[item].octave);
-      highlight(item);
-
-      await sleep(750);
+    if (!selected) {
+      return setSelected(card);
     }
 
-    toast.success("Sua vez!");
-  }
+    const isEqual = selected.key === card.key;
+    const isSameCard = selected.id === card.id;
 
-  function checkNote(key: number) {
-    const isMiss = order[countNote] !== key;
+    if (isEqual && !isSameCard) {
+      const newFinished = [...finished, card.key];
 
-    if (isMiss) {
-      return toast.error("Errou! Tente se lembrar.");
+      setFinished(newFinished);
+
+      if (newFinished.length === list.length) {
+        toast.success("Parabéns o jogo acabou!");
+        await Utils.sleep(2000);
+        start();
+      }
     }
 
-    toast.success("Acertou! Qual a próxima?");
-
-    if (countNote === order.length - 1) {
-      setIsPlaying(false);
-      party();
-      return toast.success("Finalizado com sucesso. Parabéns!");
+    if (!isEqual && !isSameCard) {
+      setSecondSelected(card);
+      await Utils.sleep(1000);
+      setSecondSelected(null);
     }
 
-    setCountNote(countNote + 1);
-  }
-
-  function handlePlay(note: Notes, octave = 4, key: number) {
-    return async () => {
-      instrumentRef.current.play(note, octave);
-      if (isPlaying) checkNote(key);
-      highlight(key);
-    };
+    setSelected(null);
   }
 
   return (
-    <Layout>
-      <ul className="grid grid-cols-2 gap-6 mb-8">
-        {[1, 2, 3, 4].map((number) => (
-          <Block
-            key={number}
-            value={number}
-            highlight={highlights === number}
-            onClick={handlePlay(
-              blocks[number].frequency,
-              blocks[number].octave,
-              number
-            )}
+    <div className="h-screen flex items-center justify-center">
+      <div className="grid grid-cols-4 grid-rows-3 gap-4">
+        {cards.map((card, index) => (
+          <Card
+            key={index}
+            card={card}
+            onSelect={handleSelectCard}
+            selected={
+              (selected && selected.id === card.id) ||
+              (secondSelected && secondSelected.id === card.id)
+            }
+            finished={finished.includes(card.key)}
           />
         ))}
-      </ul>
-
-      {!isPlaying && (
-        <button
-          className="text-white px-4 py-3 rounded-lg bg-gray-600"
-          onClick={handleStart}
-        >
-          Começar
-        </button>
-      )}
-
-      {width !== Infinity && height !== Infinity && (
-        <Confetti
-          width={width}
-          height={height}
-          numberOfPieces={isParty ? 1000 : 0}
-        />
-      )}
-    </Layout>
+      </div>
+    </div>
   );
 };
 
-export default GeniusPage;
+export default MemoryPage;
