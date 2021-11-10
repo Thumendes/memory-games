@@ -2,6 +2,7 @@ import { AppProps } from "next/app";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import "tailwindcss/tailwind.css";
+import ConfettiContextProvider from "../hooks/useConfetti";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
@@ -21,10 +22,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <>
+    <ConfettiContextProvider>
       <Toaster />
       <Component {...pageProps} />
-    </>
+    </ConfettiContextProvider>
   );
 };
 

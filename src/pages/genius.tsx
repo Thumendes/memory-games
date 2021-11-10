@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import Confetti from "react-confetti";
 import toast from "react-hot-toast";
-import useWindowSize from "react-use/lib/useWindowSize";
 import Block from "../components/Genius/Block";
 import Layout from "../components/Layout";
 import { blocks } from "../data/blocks";
+import { useConfetti } from "../hooks/useConfetti";
 import Instrument, { Notes } from "../lib/Instrument";
 import Utils from "../lib/Utils";
 
@@ -24,9 +23,8 @@ const GeniusPage = () => {
   const [order, setOrder] = useState<number[]>([]);
   const [countNote, setCountNote] = useState(0);
   const [highlights, setHighlights] = useState<number>();
-  const [isParty, setIsParty] = useState(false);
   const instrumentRef = useRef<Instrument>(null);
-  const { height, width } = useWindowSize();
+  const { trigger } = useConfetti();
 
   useEffect(() => {
     instrumentRef.current = new Instrument("triangle");
@@ -55,12 +53,6 @@ const GeniusPage = () => {
     setHighlights(key);
     await Utils.sleep(200);
     setHighlights(undefined);
-  }
-
-  async function party() {
-    setIsParty(true);
-    await Utils.sleep(5000);
-    setIsParty(false);
   }
 
   async function play(order: number[]) {
@@ -92,7 +84,7 @@ const GeniusPage = () => {
 
     if (countNote === order.length - 1) {
       setIsPlaying(false);
-      party();
+      trigger();
       return toast.success("Finalizado com sucesso. Parabéns!");
     }
 
@@ -108,7 +100,7 @@ const GeniusPage = () => {
   }
 
   return (
-    <Layout>
+    <Layout goBack>
       <ul className="grid grid-cols-2 gap-6 mb-8">
         {[1, 2, 3, 4].map((number) => (
           <Block
@@ -131,14 +123,6 @@ const GeniusPage = () => {
         >
           Começar
         </button>
-      )}
-
-      {width !== Infinity && height !== Infinity && (
-        <Confetti
-          width={width}
-          height={height}
-          numberOfPieces={isParty ? 1000 : 0}
-        />
       )}
     </Layout>
   );
