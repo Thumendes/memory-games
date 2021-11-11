@@ -50,10 +50,11 @@ class GeniusGame {
     this.order = newOrder;
   }
 
-  public start() {
+  public async start() {
     this.reset();
     this.playing = true;
     this.generate();
+    await Utils.sleep(500);
     this.onUpdate({
       currentIndex: this.currentIndex,
       order: this.getCurrentOrder(),

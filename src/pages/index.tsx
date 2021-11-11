@@ -17,7 +17,7 @@ const HomePage = () => {
   return (
     <Layout>
       <div className="mb-16 px-4 text-center pt-16 z-10">
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-4xl font-bold uppercase">
           Trabalho interdisciplinar enfermagem 2º período
         </h1>
       </div>

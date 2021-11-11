@@ -107,6 +107,13 @@ const GeniusPage = () => {
     gameRef.current.start();
   }, [level, handleGameUpdate, handleGameFinish]);
 
+  const handleFinish = () => {
+    setIsPlaying(false);
+    setCurrentIndex(null);
+    setGamePlayingNotes(false);
+    gameRef.current = null;
+  };
+
   return (
     <Layout goBack>
       {isPlaying && (
@@ -115,7 +122,7 @@ const GeniusPage = () => {
           <span className="text-gray-800">
             {currentIndex} {currentIndex === 1 ? "nota" : "notas"}
           </span>
-          {!gamePlayingNotes && <span>Sua vez!</span>}
+          <span>{gamePlayingNotes ? "Atenção!" : "Sua vez!"}</span>
         </div>
       )}
 
@@ -125,37 +132,46 @@ const GeniusPage = () => {
             key={number}
             value={number}
             highlight={highlights === number}
-            onClick={handlePlay(number)}
+            onClick={handlePlay(number)}  
           />
         ))}
       </ul>
 
-      {!isPlaying && (
-        <div className="flex gap-4">
+      <div className="flex gap-4">
+        {isPlaying ? (
           <button
             className="text-white px-4 py-3 rounded-lg bg-gray-600"
-            onClick={handleStart}
+            onClick={handleFinish}
           >
-            Começar
+            Terminar jogo
           </button>
+        ) : (
+          <>
+            <button
+              className="text-white px-4 py-3 rounded-lg bg-gray-600"
+              onClick={handleStart}
+            >
+              Começar
+            </button>
 
-          <select
-            value={level}
-            onChange={(event) => setLevel(+event.target.value)}
-            className="outline-none px-4 py-3 rounded-lg bg-gray-100 border border-gray-400"
-          >
-            <option value={GeniusLevelsLength.EASY}>
-              {levelsLabels[GeniusLevelsLength.EASY]}
-            </option>
-            <option value={GeniusLevelsLength.MEDIUM}>
-              {levelsLabels[GeniusLevelsLength.MEDIUM]}
-            </option>
-            <option value={GeniusLevelsLength.HARD}>
-              {levelsLabels[GeniusLevelsLength.HARD]}
-            </option>
-          </select>
-        </div>
-      )}
+            <select
+              value={level}
+              onChange={(event) => setLevel(+event.target.value)}
+              className="outline-none px-4 py-3 rounded-lg bg-gray-100 border border-gray-400"
+            >
+              <option value={GeniusLevelsLength.EASY}>
+                {levelsLabels[GeniusLevelsLength.EASY]}
+              </option>
+              <option value={GeniusLevelsLength.MEDIUM}>
+                {levelsLabels[GeniusLevelsLength.MEDIUM]}
+              </option>
+              <option value={GeniusLevelsLength.HARD}>
+                {levelsLabels[GeniusLevelsLength.HARD]}
+              </option>
+            </select>
+          </>
+        )}
+      </div>
     </Layout>
   );
 };
