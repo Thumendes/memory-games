@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import Block from "../components/Genius/Block";
-import Layout from "../components/Layout";
-import { blocks } from "../data/blocks";
-import { useConfetti } from "../hooks/useConfetti";
+import Block from "../../components/Genius/Block";
+import Layout from "../../components/Layout";
+import { blocks } from "../../data/blocks";
+import { useConfetti } from "../../hooks/useConfetti";
 import GeniusGame, {
   GameOnFinish,
   GameOnUpdate,
   GeniusLevelsLength,
-} from "../lib/GeniusGame";
-import Instrument, { Notes } from "../lib/Instrument";
-import Utils from "../lib/Utils";
+} from "../../lib/GeniusGame";
+import Instrument, { Notes } from "../../lib/Instrument";
+import Utils from "../../lib/Utils";
 import { FiAlertCircle, FiCheckCircle } from "react-icons/fi";
 
 const levelsLabels = {

@@ -1,22 +1,35 @@
-import Layout from "../components/Layout";
-import Card from "../components/Memory/Card";
-import Modal from "../components/Modal";
-import list from "../data/list";
-import { useConfetti } from "../hooks/useConfetti";
-import useMemoryGame from "../hooks/useMemoryGame";
+import Layout from "../../components/Layout";
+import Card from "../../components/Memory/Card";
+import Modal from "../../components/Modal";
+import list from "../../data/list";
+import { useConfetti } from "../../hooks/useConfetti";
+import useMemoryGame from "../../hooks/useMemoryGame";
+import Router from "next/router";
+import { useState } from "react";
 
 const MemoryPage = () => {
   const { trigger } = useConfetti();
+  const [gameFinished, setGameFinished] = useState(false);
+
+  const handleCloseModal = () => {
+    setCardHightligh(null);
+
+    if (gameFinished) {
+      trigger();
+      setGameFinished(false);
+      Router.push("/memory/info");
+    }
+  };
 
   const {
     cardHightligh,
-    setCardHightligh,
-    handleSelectCard,
     cards,
     selected,
     secondSelected,
     finished,
-  } = useMemoryGame({ list, onFinish: trigger });
+    setCardHightligh,
+    handleSelectCard,
+  } = useMemoryGame({ list, onFinish: () => setGameFinished(true) });
 
   return (
     <Layout goBack>
@@ -39,7 +52,7 @@ const MemoryPage = () => {
       </div>
 
       {cardHightligh && (
-        <Modal item={cardHightligh} onClose={() => setCardHightligh(null)} />
+        <Modal item={cardHightligh} onClose={handleCloseModal} />
       )}
     </Layout>
   );
