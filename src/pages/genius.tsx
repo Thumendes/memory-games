@@ -11,6 +11,7 @@ import GeniusGame, {
 } from "../lib/GeniusGame";
 import Instrument, { Notes } from "../lib/Instrument";
 import Utils from "../lib/Utils";
+import { FiAlertCircle, FiCheckCircle } from "react-icons/fi";
 
 const levelsLabels = {
   [GeniusLevelsLength.EASY]: "Modo fácil",
@@ -117,12 +118,26 @@ const GeniusPage = () => {
   return (
     <Layout goBack>
       {isPlaying && (
-        <div className="mb-8 max-w-sm w-full text-2xl font-bold flex justify-between">
-          <span className="text-gray-400">{levelsLabels[level]}</span>
-          <span className="text-gray-800">
-            {currentIndex} {currentIndex === 1 ? "nota" : "notas"}
-          </span>
-          <span>{gamePlayingNotes ? "Atenção!" : "Sua vez!"}</span>
+        <div className="mb-8 max-w-sm w-full text-2xl font-bold flex flex-col">
+          <div className="text-center text-4xl mb-8">
+            <span className="text-gray-800">
+              {currentIndex} {currentIndex === 1 ? "nota" : "notas"}
+            </span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-gray-400">{levelsLabels[level]}</span>
+            {gamePlayingNotes ? (
+              <span className="p-2 rounded-lg bg-yellow-500 text-white text-lg flex gap-2 items-center font-normal">
+                <FiAlertCircle />
+                Atenção!
+              </span>
+            ) : (
+              <span className="p-2 rounded-lg bg-green-400 text-white text-lg flex gap-2 items-center font-normal">
+                <FiCheckCircle />
+                Sua vez!
+              </span>
+            )}
+          </div>
         </div>
       )}
 
@@ -132,7 +147,7 @@ const GeniusPage = () => {
             key={number}
             value={number}
             highlight={highlights === number}
-            onClick={handlePlay(number)}  
+            onClick={handlePlay(number)}
           />
         ))}
       </ul>
