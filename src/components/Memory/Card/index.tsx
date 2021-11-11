@@ -13,20 +13,21 @@ const Card = ({ card, onSelect, selected, finished }) => {
     setIsFlipped(selected);
   }, [finished, selected]);
 
+  const Wrapper = ({ children }) => (
+    <div
+      onClick={() => onSelect(card)}
+      className="bg-white w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 border-2 border-gray-200 rounded-lg p-2"
+    >
+      {children}
+    </div>
+  );
+
   return (
     <ReactCardFlip isFlipped={isFlipped}>
-      <div
-        onClick={() => onSelect(card)}
-        className="bg-white w-24 h-2w-24 md:w-32 md:h-32 lg:w-40 lg:h-40 border-2 border-gray-200 flex items-center justify-center rounded-lg p-4"
-      >
+      <Wrapper>
         <Image src="/brain.svg" alt="Brain" height={200} width={200} />
-      </div>
-      <div
-        onClick={() => onSelect(card)}
-        className="bg-white w-24 h-2w-24 md:w-32 md:h-32 lg:w-40 lg:h-40 border-2 border-gray-200 flex items-center justify-center rounded-lg p-1"
-      >
-        {selected || finished ? <span>{card.value}</span> : ""}
-      </div>
+      </Wrapper>
+      <Wrapper>{selected || finished ? <div>{card.value}</div> : ""}</Wrapper>
     </ReactCardFlip>
   );
 };

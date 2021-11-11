@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import Card from "../components/Memory/Card";
+import Modal from "../components/Modal";
 import list from "../data/list";
 import { useConfetti } from "../hooks/useConfetti";
 import useMemoryGame from "../hooks/useMemoryGame";
@@ -7,8 +8,15 @@ import useMemoryGame from "../hooks/useMemoryGame";
 const MemoryPage = () => {
   const { trigger } = useConfetti();
 
-  const { cards, handleSelectCard, selected, secondSelected, finished } =
-    useMemoryGame({ list, onFinish: trigger });
+  const {
+    cardHightligh,
+    setCardHightligh,
+    handleSelectCard,
+    cards,
+    selected,
+    secondSelected,
+    finished,
+  } = useMemoryGame({ list, onFinish: trigger });
 
   return (
     <Layout goBack>
@@ -29,6 +37,10 @@ const MemoryPage = () => {
           );
         })}
       </div>
+
+      {cardHightligh && (
+        <Modal item={cardHightligh} onClose={() => setCardHightligh(null)} />
+      )}
     </Layout>
   );
 };

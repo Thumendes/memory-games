@@ -11,6 +11,7 @@ interface MemoryGameHookProps {
 function useMemoryGame(props: MemoryGameHookProps) {
   const { onFinish, list } = props;
 
+  const [cardHightligh, setCardHightligh] = useState<ListItem>(null);
   const [cards, setCards] = useState<ListItem[]>([]);
   const [selected, setSelected] = useState<ListItem>(null);
   const [finished, setFinished] = useState<number[]>([]);
@@ -45,6 +46,8 @@ function useMemoryGame(props: MemoryGameHookProps) {
     if (isEqual && !isSameCard) {
       const newFinished = [...finished, card.key];
       setFinished(newFinished);
+      await Utils.sleep(750);
+      setCardHightligh(card);
 
       if (newFinished.length === list.length) {
         onFinish && onFinish();
@@ -62,7 +65,15 @@ function useMemoryGame(props: MemoryGameHookProps) {
     setSelected(null);
   }
 
-  return { cards, handleSelectCard, selected, secondSelected, finished };
+  return {
+    cardHightligh,
+    cards,
+    selected,
+    secondSelected,
+    finished,
+    handleSelectCard,
+    setCardHightligh,
+  };
 }
 
 export default useMemoryGame;
