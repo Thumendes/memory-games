@@ -23,7 +23,19 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <ConfettiContextProvider>
-      <Toaster />
+      <Toaster
+        containerStyle={{
+          top: 50,
+        }}
+        toastOptions={{
+          position: "top-center",
+          style: {
+            padding: 24,
+            fontSize: 24,
+            width: "100%",
+          },
+        }}
+      />
       <Component {...pageProps} />
     </ConfettiContextProvider>
   );
