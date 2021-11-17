@@ -7,6 +7,9 @@ module.exports = {
         "-10": "-10",
       },
     },
+    fontFamily: {
+      sans: ["Rubik"],
+    },
   },
   variants: {
     extend: {},

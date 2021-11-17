@@ -16,7 +16,7 @@ const students = [
 const HomePage = () => {
   return (
     <Layout>
-      <div className="mb-16 px-4 text-center pt-16 z-10">
+      <div className="py-16 px-4 text-center z-10">
         <h1 className="text-4xl font-bold uppercase">
           Trabalho interdisciplinar enfermagem 2º período
         </h1>
@@ -47,7 +47,7 @@ const HomePage = () => {
         <span className="text-4xl font-bold">Sua memória está em dia?</span>
       </div>
 
-      <ul className="flex gap-8 pb-16">
+      <ul className="flex gap-8 pb-24">
         <Link href="/genius" passHref>
           <li className="relative hover:bg-gray-300 text-gray-400 hover:text-gray-900 transition cursor-pointer w-40 h-40 lg:w-52 lg:h-52 p-4 bg-gray-200 flex items-center justify-center rounded-lg">
             <Image

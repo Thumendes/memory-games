@@ -27,12 +27,12 @@ const dataObj = {
   4: {
     name: "Higiene",
     description:
-      "É muito importante que a higiene seja mantida para prevenção de doenças e para seu bem-estar. São exemplos: lavar bem as mãos, escovar os dentes, tomar banho.",
+      "É muito importante que a higiene seja mantida para prevenção de doenças e bem-estar. São exemplos: lavar bem as mãos, escovar os dentes, tomar banho.",
   },
   5: {
     name: "Alimentação saudável",
     description:
-      "Uma alimentação saudável é essencial pra sua saúde corporal. Quanto mais colorido o seu prato melhor! Coma verduras e legumes, mantenha seu prato sempre diversificado.",
+      "Uma alimentação saudável é essencial para sua saúde corporal. Quando mais colorido o seu prato melhor! Coma verduras e legumes, mantenha seu prato sempre diversificado.",
   },
   6: {
     name: "Hidratação",

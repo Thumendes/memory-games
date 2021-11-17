@@ -8,7 +8,7 @@ const Layout = ({ children, title = "Jogo de memória!", goBack = false }) => {
         <title>{title}</title>
       </Head>
 
-      <main className="h-screen">
+      <main className="min-h-screen h-full bg-gray-50">
         {goBack && (
           <header className="p-4 fixed top-0 w-full">
             <Link href="/">
@@ -16,7 +16,7 @@ const Layout = ({ children, title = "Jogo de memória!", goBack = false }) => {
             </Link>
           </header>
         )}
-        <div className="h-full bg-gray-50 flex items-center justify-center flex-col">
+        <div className="min-h-screen flex items-center justify-center flex-col">
           {children}
         </div>
         {/* <footer className="p-4 fixed bottom-0 w-full">
